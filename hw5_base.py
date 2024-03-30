@@ -240,8 +240,8 @@ def execute_exp(args=None, multi_gpus=False):
 
         with mirrored_strategy.scope():
             # Build network: you must provide your own implementation
-            model = create_unet_classifier(image_size,
-                                           nchannels,
+            model = create_unet_classifier((256, 256),
+                                           26,
                                            kernel_size=(args.conv_size, args.conv_size),
                                            pool_size=(args.pool, args.pool),
                                            depth=args.depth,
@@ -259,8 +259,8 @@ def execute_exp(args=None, multi_gpus=False):
     else:
         # Single GPU
         # Build network: you must provide your own implementation
-        model = create_unet_classifier(image_size,
-                                       nchannels,
+        model = create_unet_classifier((256, 256),
+                                       26,
                                        kernel_size=(args.conv_size, args.conv_size),
                                        pool_size=(args.pool, args.pool),
                                        depth=args.depth,
