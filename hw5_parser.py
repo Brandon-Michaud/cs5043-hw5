@@ -66,6 +66,9 @@ def create_parser():
     parser.add_argument('--patience', type=int, default=100, help="Patience for early termination")
     parser.add_argument('--monitor', type=str, default="val_loss", help="Metric to monitor for early termination")
 
+    # Gradient clipping
+    parser.add_argument('--grad_clip', type=float, default=None, help='Threshold for gradient clipping')
+
     # Training parameters
     parser.add_argument('--batch', type=int, default=10, help="Training set batch size")
     parser.add_argument('--prefetch', type=int, default=3, help="Number of batches to prefetch")
