@@ -50,7 +50,7 @@ from pfam_loader import *
 from hw5_parser import *
 
 # You need to provide this yourself
-from cnn_classifier import *
+from rnn_classifier import *
 
 
 def exp_type_to_hyperparameters(args):
@@ -182,6 +182,28 @@ def generate_fname(args, params_str):
     return f'{args.results_path}/{args.exp_type}'
 
 
+def create_classifier_network(args, n_classes):
+    if args.exp_type == 'rnn':
+        return create_simple_rnn(args.rnn_layers,
+                                 args.dense_layers,
+                                 n_classes,
+                                 activation_rnn=args.rnn_activation,
+                                 activation_dense=args.dense_activation,
+                                 return_sequences=args.return_sequences,
+                                 unroll=args.unroll,
+                                 lambda_regularization=args.l2,
+                                 dropout=args.dropout,
+                                 batch_normalization=args.batch_normalization,
+                                 grad_clip=args.grad_clip,
+                                 lrate=args.lrate,
+                                 loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+                                 metrics=[tf.keras.metrics.SparseCategoricalAccuracy()])
+    elif args.exp_type == 'cnn':
+        return None
+    else:
+        assert False, f'unrecognized experiment type {args.exp_type}'
+
+
 def execute_exp(args=None, multi_gpus=False):
     '''
     Perform the training and evaluation for a single model
@@ -240,41 +262,11 @@ def execute_exp(args=None, multi_gpus=False):
 
         with mirrored_strategy.scope():
             # Build network: you must provide your own implementation
-            model = create_unet_classifier((256, 256),
-                                           26,
-                                           kernel_size=(args.conv_size, args.conv_size),
-                                           pool_size=(args.pool, args.pool),
-                                           depth=args.depth,
-                                           conv_per_layer=args.conv_per_layer,
-                                           p_spatial_dropout=args.spatial_dropout,
-                                           lambda_l2=args.L2_regularization,
-                                           batch_normalization=args.batch_normalization,
-                                           lrate=args.lrate,
-                                           n_classes=n_classes,
-                                           loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                                           metrics=[tf.keras.metrics.SparseCategoricalAccuracy()],
-                                           padding=args.padding,
-                                           conv_activation=args.activation_conv,
-                                           skip=args.skip)
+            model = create_classifier_network(args, n_classes)
     else:
         # Single GPU
         # Build network: you must provide your own implementation
-        model = create_unet_classifier((256, 256),
-                                       26,
-                                       kernel_size=(args.conv_size, args.conv_size),
-                                       pool_size=(args.pool, args.pool),
-                                       depth=args.depth,
-                                       conv_per_layer=args.conv_per_layer,
-                                       p_spatial_dropout=args.spatial_dropout,
-                                       lambda_l2=args.L2_regularization,
-                                       batch_normalization=args.batch_normalization,
-                                       lrate=args.lrate,
-                                       n_classes=n_classes,
-                                       loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-                                       metrics=[tf.keras.metrics.SparseCategoricalAccuracy()],
-                                       padding=args.padding,
-                                       conv_activation=args.activation_conv,
-                                       skip=args.skip)
+        model = create_classifier_network(args, n_classes)
 
     # Report model structure if verbosity is turned on
     if args.verbose >= 1:

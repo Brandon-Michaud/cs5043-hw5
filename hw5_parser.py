@@ -44,6 +44,14 @@ def create_parser():
     parser.add_argument('--epochs', type=int, default=100, help='Training epochs')
     parser.add_argument('--lrate', type=float, default=0.001, help="Learning rate")
 
+    # Recurrent parameters
+    parser.add_argument('--rnn_layers', nargs='+', type=int, default=[10, 5], help='Number of units per rnn layer (sequence of ints)')
+    parser.add_argument('--rnn_activation', type=str, default='elu', help='Activation for rnn units')
+    parser.add_argument('--dense_layers', nargs='+', type=int, default=[10, 5], help='Number of units per dense layer (sequence of ints)')
+    parser.add_argument('--dense_activation', type=str, default='elu', help='Activation for dense units')
+    parser.add_argument('--return_sequences', action='store_true', help='Output after every step')
+    parser.add_argument('--unroll', action='store_true', help='Unroll rnn')
+
     # Convolutional parameters
     parser.add_argument('--conv_per_layer', type=int, default=2, help='Convolution modules per layer')
     parser.add_argument('--conv_size', type=int, default=3, help='Convolution filter size per layer')
@@ -60,14 +68,12 @@ def create_parser():
     parser.add_argument('--dropout', type=float, default=None, help='Dropout rate for dense layers')
     parser.add_argument('--L1_regularization', '--l1', type=float, default=None, help="L1 regularization parameter")
     parser.add_argument('--L2_regularization', '--l2', type=float, default=None, help="L2 regularization parameter")
+    parser.add_argument('--grad_clip', type=float, default=None, help='Threshold for gradient clipping')
 
     # Early stopping
     parser.add_argument('--min_delta', type=float, default=0.0, help="Minimum delta for early termination")
     parser.add_argument('--patience', type=int, default=100, help="Patience for early termination")
     parser.add_argument('--monitor', type=str, default="val_loss", help="Metric to monitor for early termination")
-
-    # Gradient clipping
-    parser.add_argument('--grad_clip', type=float, default=None, help='Threshold for gradient clipping')
 
     # Training parameters
     parser.add_argument('--batch', type=int, default=10, help="Training set batch size")
