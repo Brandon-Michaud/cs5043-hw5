@@ -1,5 +1,5 @@
 --gpu
---batch=64
+--batch=16
 --steps_per_epoch=100
 --repeat
 --prefetch=8

@@ -13,10 +13,10 @@ def create_parser():
     Create argument parser
     '''
     # Parse the command-line arguments
-    parser = argparse.ArgumentParser(description='HW4', fromfile_prefix_chars='@')
+    parser = argparse.ArgumentParser(description='HW5', fromfile_prefix_chars='@')
 
     # High-level info for WandB
-    parser.add_argument('--project', type=str, default='hw4', help='WandB project name')
+    parser.add_argument('--project', type=str, default='hw5', help='WandB project name')
 
     # High-level commands
     parser.add_argument('--check', action='store_true', help='Check results for completeness')
@@ -35,10 +35,8 @@ def create_parser():
     
     parser.add_argument('--label', type=str, default=None, help="Extra label to add to output files")
     parser.add_argument('--dataset', type=str, default='/home/fagg/datasets/core50', help='Data set directory')
-    parser.add_argument('--image_size', nargs=3, type=int, default=[256,256,26], help="Size of input images (rows, cols, channels)")
 
-    parser.add_argument('--fold', type=int, default=0, help='Fold to use for splits')
-    parser.add_argument('--train_filt', type=str, default='*0', help='Regular expression filter applied to training set')
+    parser.add_argument('--rotation', type=int, default=0, help='Rotation to use for splits')
     parser.add_argument('--results_path', type=str, default='./results', help='Results directory')
 
     # Specific experiment configuration
@@ -59,6 +57,7 @@ def create_parser():
 
     # Regularization parameters
     parser.add_argument('--spatial_dropout', type=float, default=None, help='Dropout rate for convolutional layers')
+    parser.add_argument('--dropout', type=float, default=None, help='Dropout rate for dense layers')
     parser.add_argument('--L1_regularization', '--l1', type=float, default=None, help="L1 regularization parameter")
     parser.add_argument('--L2_regularization', '--l2', type=float, default=None, help="L2 regularization parameter")
 
