@@ -1,0 +1,10 @@
+--project=hw4
+--train_filt=*[012345678]
+--lrate=0.0001
+--epochs=200
+--patience=100
+--min_delta=0
+--shuffle=200
+--save_model
+--render
+--nogo
