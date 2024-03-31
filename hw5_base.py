@@ -287,7 +287,7 @@ def execute_exp(args=None, multi_gpus=False):
     # Report model structure if verbosity is turned on
     if args.verbose >= 1:
         print(model.summary())
-        
+
     print(args)
 
     # Output file base and pkl file
