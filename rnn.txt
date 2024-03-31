@@ -3,10 +3,14 @@
 --rnn_layers
 10
 --rnn_activation=elu
+--pool=2
+--padding=valid
 --dense_layers
-5
-2
+128
+64
+32
 --dense_activation=elu
+--bidirectional
 --unroll
 --n_embedding=16
 --grad_clip=0.01
