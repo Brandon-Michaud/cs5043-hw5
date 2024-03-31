@@ -188,7 +188,7 @@ def create_classifier_network(args, n_classes, n_tokens):
                                  args.dense_layers,
                                  n_classes,
                                  n_tokens,
-                                 n_embedding=args.n_embedding,
+                                 args.n_embedding,
                                  activation_rnn=args.rnn_activation,
                                  activation_dense=args.dense_activation,
                                  return_sequences=args.return_sequences,
@@ -262,11 +262,11 @@ def execute_exp(args=None, multi_gpus=False):
 
         with mirrored_strategy.scope():
             # Build network: you must provide your own implementation
-            model = create_classifier_network(args, n_classes)
+            model = create_classifier_network(args, n_classes, n_tokens)
     else:
         # Single GPU
         # Build network: you must provide your own implementation
-        model = create_classifier_network(args, n_classes)
+        model = create_classifier_network(args, n_classes, n_tokens)
 
     print(args)
 
