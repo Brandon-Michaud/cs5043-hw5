@@ -1,19 +1,22 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import SimpleRNN, Dense, Embedding
+from tensorflow.keras.layers import Conv1D, MaxPooling1D, GlobalMaxPooling1D, Dense, Embedding
 
 
-def create_simple_rnn(input_size,
+def create_simple_cnn(input_size,
                       n_classes,
                       n_tokens,
                       n_embedding,
-                      rnn_layers,
+                      conv_layers,
+                      kernel_sizes,
                       dense_layers,
-                      activation_rnn=None,
+                      pool_size=2,
+                      padding='valid',
+                      activation_conv=None,
                       activation_dense=None,
-                      unroll=True,
                       lambda_regularization=None,
+                      spatial_dropout=None,
                       dropout=None,
                       batch_normalization=False,
                       grad_clip=None,
@@ -26,22 +29,20 @@ def create_simple_rnn(input_size,
 
     model = Sequential()
     model.add(Embedding(input_dim=n_tokens, output_dim=n_embedding, input_length=input_size))
-    for i, n_neurons in enumerate(rnn_layers):
-        model.add(SimpleRNN(n_neurons,
-                            activation=activation_rnn,
-                            use_bias=True,
-                            return_sequences=(i != len(rnn_layers) - 1),
-                            kernel_initializer='random_uniform',
-                            bias_initializer='zeros',
-                            kernel_regularizer=lambda_regularization,
-                            unroll=unroll))
+    for filters, kernel_size in zip(conv_layers, kernel_sizes):
+        model.add(Conv1D(filters=filters, kernel_size=kernel_size, strides=1,
+                         padding=padding, use_bias=True, activation=activation_conv,
+                         kernel_regularizer=tf.keras.regularizers.l2(l2=lambda_regularization)))
+        model.add(MaxPooling1D(pool_size=pool_size, strides=pool_size, padding=padding))
+
+    model.add(GlobalMaxPooling1D())
+
     for n_neurons in dense_layers:
         model.add(Dense(units=n_neurons,
                         activation=activation_dense,
                         use_bias=True,
-                        kernel_initializer='random_uniform',
-                        bias_initializer='zeros',
                         kernel_regularizer=lambda_regularization))
+
     model.add(Dense(units=n_classes,
                     activation='softmax',
                     kernel_initializer='random_uniform',
