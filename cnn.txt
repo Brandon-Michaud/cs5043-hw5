@@ -1,6 +1,6 @@
 --exp_type=cnn
 --label=cnn
---cnn_layers
+--conv_layers
 64
 32
 --kernel_sizes
