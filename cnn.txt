@@ -1,9 +1,13 @@
 --exp_type=cnn
 --label=cnn
 --conv_layers
-64
 32
+64
+128
+256
 --kernel_sizes
+3
+3
 3
 3
 --pool=2
