@@ -1,7 +1,10 @@
 --exp_type=rnn
 --label=rnn
 --rnn_layers
-10
+1024
+512
+256
+128
 --rnn_activation=elu
 --pool=2
 --padding=valid
