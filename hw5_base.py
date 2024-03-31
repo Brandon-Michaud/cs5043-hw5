@@ -182,11 +182,13 @@ def generate_fname(args, params_str):
     return f'{args.results_path}/{args.exp_type}'
 
 
-def create_classifier_network(args, n_classes):
+def create_classifier_network(args, n_classes, n_tokens):
     if args.exp_type == 'rnn':
         return create_simple_rnn(args.rnn_layers,
                                  args.dense_layers,
                                  n_classes,
+                                 n_tokens,
+                                 n_embedding=args.n_embedding,
                                  activation_rnn=args.rnn_activation,
                                  activation_dense=args.dense_activation,
                                  return_sequences=args.return_sequences,
