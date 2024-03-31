@@ -184,11 +184,12 @@ def generate_fname(args, params_str):
 
 def create_classifier_network(args, n_classes, n_tokens):
     if args.exp_type == 'rnn':
-        return create_simple_rnn(args.rnn_layers,
-                                 args.dense_layers,
+        return create_simple_rnn(args.sequence_length,
                                  n_classes,
                                  n_tokens,
                                  args.n_embedding,
+                                 args.rnn_layers,
+                                 args.dense_layers,
                                  activation_rnn=args.rnn_activation,
                                  activation_dense=args.dense_activation,
                                  return_sequences=args.return_sequences,

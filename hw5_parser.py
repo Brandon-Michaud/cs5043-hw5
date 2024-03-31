@@ -43,6 +43,7 @@ def create_parser():
     parser.add_argument('--exp_index', type=int, default=None, help='Experiment index')
     parser.add_argument('--epochs', type=int, default=100, help='Training epochs')
     parser.add_argument('--lrate', type=float, default=0.001, help="Learning rate")
+    parser.add_argument('--sequence_length', type=int, default=10, help='Maximum length of sequence')
     parser.add_argument('--n_embedding', type=int, default=16, help='Size of embeddings')
 
     # Recurrent parameters

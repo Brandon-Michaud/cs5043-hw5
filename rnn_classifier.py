@@ -4,11 +4,12 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import SimpleRNN, Dense, Embedding
 
 
-def create_simple_rnn(rnn_layers,
-                      dense_layers,
+def create_simple_rnn(input_size,
                       n_classes,
                       n_tokens,
                       n_embedding,
+                      rnn_layers,
+                      dense_layers,
                       activation_rnn=None,
                       activation_dense=None,
                       return_sequences=False,
@@ -25,7 +26,7 @@ def create_simple_rnn(rnn_layers,
         lambda_regularization = tf.keras.regularizers.l2(lambda_regularization)
 
     model = Sequential()
-    model.add(Embedding(input_dim=n_tokens, output_dim=n_embedding))
+    model.add(Embedding(input_dim=n_tokens, output_dim=n_embedding, input_length=input_size))
     for n_neurons in rnn_layers:
         model.add(SimpleRNN(n_neurons,
                             activation=activation_rnn,
