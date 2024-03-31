@@ -8,4 +8,3 @@
 2
 --dense_activation=elu
 --unroll
---nogo
