@@ -2,9 +2,6 @@
 --label=rnn
 --rnn_layers
 128
-64
-32
-16
 --rnn_activation=elu
 --pool=2
 --padding=valid
