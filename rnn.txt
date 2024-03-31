@@ -1,10 +1,10 @@
 --exp_type=rnn
 --label=rnn
 --rnn_layers
-512
-256
 128
 64
+32
+16
 --rnn_activation=elu
 --pool=2
 --padding=valid
@@ -17,3 +17,4 @@
 --unroll
 --n_embedding=16
 --grad_clip=0.01
+--nogo
