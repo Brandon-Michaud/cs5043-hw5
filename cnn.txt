@@ -15,4 +15,3 @@
 --dense_activation=elu
 --n_embedding=16
 --grad_clip=0.01
---nogo
