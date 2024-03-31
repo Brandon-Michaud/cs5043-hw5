@@ -50,15 +50,16 @@ def create_parser():
     parser.add_argument('--rnn_layers', nargs='+', type=int, default=[10, 5], help='Number of units per rnn layer (sequence of ints)')
     parser.add_argument('--rnn_activation', type=str, default='elu', help='Activation for rnn units')
     parser.add_argument('--unroll', action='store_true', help='Unroll rnn')
+    parser.add_argument('--bidirectional', action='store_true', help='Make RNN layers bidirectional')
 
     # Convolutional parameters
     parser.add_argument('--conv_layers', nargs='+', type=int, default=[10, 5], help='Number of filters per convolutional layer (sequence of ints)')
     parser.add_argument('--kernel_sizes', nargs='+', type=int, default=[10, 5], help='Kernel size per convolutional layer (sequence of ints)')
-    parser.add_argument('--pool', type=int, default=2, help='Max pooling size')
-    parser.add_argument('--padding', type=str, default='valid', help='Padding type for convolutional layers')
     parser.add_argument('--conv_activation', type=str, default='elu', help='Activation function for convolutional layers')
 
-    # Dense parameters
+    # Recurrent and convolutional parameters
+    parser.add_argument('--pool', type=int, default=2, help='Max pooling size')
+    parser.add_argument('--padding', type=str, default='valid', help='Padding type for convolutional layers')
     parser.add_argument('--dense_layers', nargs='+', type=int, default=[10, 5], help='Number of units per dense layer (sequence of ints)')
     parser.add_argument('--dense_activation', type=str, default='elu', help='Activation for dense units')
 

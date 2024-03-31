@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import SimpleRNN, Dense, Embedding
+from tensorflow.keras.layers import SimpleRNN, Bidirectional, AveragePooling1D, Dense, Embedding
 
 
 def create_simple_rnn(input_size,
@@ -13,6 +13,9 @@ def create_simple_rnn(input_size,
                       activation_rnn=None,
                       activation_dense=None,
                       unroll=True,
+                      bidirectional=False,
+                      pool_size=2,
+                      padding='valid',
                       lambda_regularization=None,
                       dropout=None,
                       batch_normalization=False,
@@ -27,14 +30,26 @@ def create_simple_rnn(input_size,
     model = Sequential()
     model.add(Embedding(input_dim=n_tokens, output_dim=n_embedding, input_length=input_size))
     for i, n_neurons in enumerate(rnn_layers):
-        model.add(SimpleRNN(n_neurons,
-                            activation=activation_rnn,
-                            use_bias=True,
-                            return_sequences=(i != len(rnn_layers) - 1),
-                            kernel_initializer='random_uniform',
-                            bias_initializer='zeros',
-                            kernel_regularizer=lambda_regularization,
-                            unroll=unroll))
+        if bidirectional:
+            model.add(Bidirectional(SimpleRNN(n_neurons,
+                                              activation=activation_rnn,
+                                              use_bias=True,
+                                              return_sequences=(i != len(rnn_layers) - 1),
+                                              kernel_initializer='random_uniform',
+                                              bias_initializer='zeros',
+                                              kernel_regularizer=lambda_regularization,
+                                              unroll=unroll)))
+        else:
+            model.add(SimpleRNN(n_neurons,
+                                activation=activation_rnn,
+                                use_bias=True,
+                                return_sequences=(i != len(rnn_layers) - 1),
+                                kernel_initializer='random_uniform',
+                                bias_initializer='zeros',
+                                kernel_regularizer=lambda_regularization,
+                                unroll=unroll))
+        if i != len(rnn_layers) - 1:
+            model.add(AveragePooling1D(pool_size=pool_size, strides=pool_size, padding=padding))
     for n_neurons in dense_layers:
         model.add(Dense(units=n_neurons,
                         activation=activation_dense,
