@@ -284,6 +284,10 @@ def execute_exp(args=None, multi_gpus=False):
         # Build network: you must provide your own implementation
         model = create_classifier_network(args, n_classes, n_tokens)
 
+    # Report model structure if verbosity is turned on
+    if args.verbose >= 1:
+        print(model.summary())
+        
     print(args)
 
     # Output file base and pkl file
