@@ -5,4 +5,3 @@
 --min_delta=0
 --shuffle=100
 --save_model
---nogo
