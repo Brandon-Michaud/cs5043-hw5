@@ -63,7 +63,7 @@ def exp_type_to_hyperparameters(args):
     :param args: ArgumentParser
     :return: Hyperparameter set (in dictionary form)
     '''
-    if args.exp_type == 'rnn' or args.expt_type == 'cnn':
+    if args.exp_type == 'rnn' or args.exp_type == 'cnn':
         p = {'rotation': range(0, 5)}
     else:
         assert False, "Unrecognized exp_type (%s)" % args.exp_type
