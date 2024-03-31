@@ -1,4 +1,5 @@
 --exp_type=rnn
+--label=rnn
 --rnn_layers
 10
 --rnn_activation=elu
