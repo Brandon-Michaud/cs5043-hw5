@@ -14,8 +14,9 @@
 --padding=valid
 --conv_activation=elu
 --dense_layers
-5
-2
+128
+64
+32
 --dense_activation=elu
 --n_embedding=16
 --grad_clip=0.01
