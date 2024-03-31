@@ -191,7 +191,7 @@ def create_classifier_network(args, n_classes):
                                  activation_dense=args.dense_activation,
                                  return_sequences=args.return_sequences,
                                  unroll=args.unroll,
-                                 lambda_regularization=args.l2,
+                                 lambda_regularization=args.L2_regularization,
                                  dropout=args.dropout,
                                  batch_normalization=args.batch_normalization,
                                  grad_clip=args.grad_clip,
