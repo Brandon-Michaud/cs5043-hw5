@@ -248,9 +248,6 @@ def execute_exp(args=None, multi_gpus=False):
                                                              repeat=args.repeat,
                                                              cache=args.cache)
 
-    if args.nogo:
-        return
-
     # Build the model
     if args.verbose >= 3:
         print('Building network')
