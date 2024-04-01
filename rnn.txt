@@ -4,7 +4,7 @@
 32
 16
 8
---rnn_activation=elu
+--rnn_activation=tanh
 --pool=2
 --padding=valid
 --dense_layers
@@ -15,5 +15,4 @@
 --bidirectional
 --unroll
 --n_embedding=16
---grad_clip=0.01
---l2=0.001
+--grad_clip=0.001
