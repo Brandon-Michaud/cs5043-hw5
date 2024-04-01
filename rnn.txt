@@ -1,7 +1,9 @@
 --exp_type=rnn
 --label=rnn
 --rnn_layers
-128
+32
+16
+8
 --rnn_activation=elu
 --pool=2
 --padding=valid
@@ -14,3 +16,4 @@
 --unroll
 --n_embedding=16
 --grad_clip=0.01
+--l2=0.001
