@@ -11,7 +11,7 @@
 128
 64
 32
---dense_activation=elu
+--dense_activation=tanh
 --bidirectional
 --unroll
 --n_embedding=16
