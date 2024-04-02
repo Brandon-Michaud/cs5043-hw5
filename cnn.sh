@@ -11,7 +11,7 @@
 #SBATCH --mail-user=brandondmichaud@ou.edu
 #SBATCH --mail-type=ALL
 #SBATCH --chdir=/home/cs504319/cs5043-hw5
-#SBATCH --array=1-4
+#SBATCH --array=4
 
 . /home/fagg/tf_setup.sh
 conda activate dnn_2024_02
