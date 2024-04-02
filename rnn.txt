@@ -16,3 +16,4 @@
 --unroll
 --n_embedding=16
 --grad_clip=0.001
+--l2=0.0001
