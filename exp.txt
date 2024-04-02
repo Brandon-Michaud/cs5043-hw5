@@ -1,6 +1,6 @@
 --project=hw5
 --sequence_length=1574
---lrate=0.00001
+--lrate=0.0001
 --epochs=200
 --patience=100
 --min_delta=0
