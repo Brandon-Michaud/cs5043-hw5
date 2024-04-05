@@ -181,6 +181,13 @@ def generate_fname(args, params_str):
 
 
 def create_classifier_network(args, n_classes, n_tokens):
+    '''
+    Creates desired network from arguments and given output classes and input tokens
+    :param args: ArgParser arguments from command line
+    :param n_classes: Number of output classes
+    :param n_tokens: Number of distinct tokens
+    '''
+    # Create RNN
     if args.exp_type == 'rnn':
         return create_simple_rnn(args.sequence_length,
                                  n_classes,
@@ -195,12 +202,11 @@ def create_classifier_network(args, n_classes, n_tokens):
                                  pool_size=args.pool,
                                  padding=args.padding,
                                  lambda_regularization=args.L2_regularization,
-                                 dropout=args.dropout,
-                                 batch_normalization=args.batch_normalization,
                                  grad_clip=args.grad_clip,
                                  lrate=args.lrate,
                                  loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                                  metrics=[tf.keras.metrics.SparseCategoricalAccuracy()])
+    # Create CNN
     elif args.exp_type == 'cnn':
         return create_simple_cnn(args.sequence_length,
                                  n_classes,
@@ -214,9 +220,6 @@ def create_classifier_network(args, n_classes, n_tokens):
                                  activation_conv=args.conv_activation,
                                  activation_dense=args.dense_activation,
                                  lambda_regularization=args.L2_regularization,
-                                 spatial_dropout=args.spatial_dropout,
-                                 dropout=args.dropout,
-                                 batch_normalization=args.batch_normalization,
                                  grad_clip=args.grad_clip,
                                  lrate=args.lrate,
                                  loss=tf.keras.losses.SparseCategoricalCrossentropy(),

@@ -17,18 +17,40 @@ def create_simple_rnn(input_size,
                       pool_size=2,
                       padding='valid',
                       lambda_regularization=None,
-                      dropout=None,
-                      batch_normalization=False,
                       grad_clip=None,
                       lrate=0.0001,
                       loss=None,
                       metrics=None):
+    '''
+    Creates a CNN for sequence modeling
+    :param input_size: Length of sequence
+    :param n_classes: Number of output classes
+    :param n_tokens: Number of distinct tokens
+    :param n_embedding: Desired size of embedding
+    :param rnn_layers: Number of nodes for convolutional layers; array
+    :param dense_layers: Number of nodes for dense layers: array
+    :param pool_size: Size for max pooling between layers
+    :param padding: Type of padding to use; valid or same
+    :param activation_rnn: Activation function for recurrent layers
+    :param activation_dense: Activation function for dense layers
+    :param unroll: Unroll RNN
+    :param bidirectional: Make simple RNN layers bidirectional
+    :param lambda_regularization: L2 regularization hyperparameter
+    :param grad_clip: Gradient clipping cutoff
+    :param lrate: Learning rate
+    :param loss: Loss function
+    :param metrics: Additional metrics to record
+    '''
     # Regularization
     if lambda_regularization is not None:
         lambda_regularization = tf.keras.regularizers.l2(lambda_regularization)
 
     model = Sequential()
+
+    # Create embeddings
     model.add(Embedding(input_dim=n_tokens, output_dim=n_embedding, input_length=input_size))
+
+    # RNN layers
     for i, n_neurons in enumerate(rnn_layers):
         if bidirectional:
             model.add(Bidirectional(SimpleRNN(n_neurons,
@@ -50,6 +72,8 @@ def create_simple_rnn(input_size,
                                 unroll=unroll))
         if i != len(rnn_layers) - 1:
             model.add(AveragePooling1D(pool_size=pool_size, strides=pool_size, padding=padding))
+
+    # Dense layers
     for n_neurons in dense_layers:
         model.add(Dense(units=n_neurons,
                         activation=activation_dense,
@@ -57,6 +81,8 @@ def create_simple_rnn(input_size,
                         kernel_initializer='random_uniform',
                         bias_initializer='zeros',
                         kernel_regularizer=lambda_regularization))
+
+    # Output layer
     model.add(Dense(units=n_classes,
                     activation='softmax',
                     kernel_initializer='random_uniform',
